@@ -1,0 +1,10 @@
+.minecraft-text-generator {
+  display: grid;
+  grid-template-columns: 50% auto;
+  height: 100%;
+
+  &__textarea {
+    resize: none;
+    max-height: 100%;
+  }
+}
