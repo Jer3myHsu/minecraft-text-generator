@@ -1,8 +1,24 @@
 <div class="minecraft-text-generator">
+  <header id="toolbar">
+    <span class="ql-formats">
+      <button class="ql-bold"></button>
+      <button class="ql-italic"></button>
+      <button class="ql-underline"></button>
+      <button class="ql-strike"></button>
+    </span>
+    <span class="ql-formats">
+      <select class="ql-color">
+        <option *ngFor="let color of colors" [value]="color.hex"></option>
+      </select>
+    </span>
+    <span class="ql-formats">
+      <button class="ql-clean"></button>
+    </span>
+  </header>
   <div class="minecraft-text-generator__textarea">
     <div id="editor"></div>
   </div>
-  <!-- <div class="minecraft-text-generator__textarea" contenteditable="true">
-
-  </div> -->
+  <div class="minecraft-text-generator__textarea">
+    {{ outputString }}
+  </div>
 </div>

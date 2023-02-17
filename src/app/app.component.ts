@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Color, colors } from './models/color';
 
 @Component({
@@ -6,10 +6,11 @@ import { Color, colors } from './models/color';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   Delta = Quill.import('delta');
   colors: Color[] = [];
   text = new this.Delta();
+  outputString: string = '';
 
   constructor() {}
 
@@ -29,21 +30,20 @@ export class AppComponent implements OnInit {
         output += `${S}m`;
       }
       if (operation.attributes?.color) {
-        output += this.colors.find(color => color.hex === operation.attributes.color)?.code;
+        output += this.colors.find(color => color.hex.toLowerCase() === operation.attributes.color.toLowerCase())?.code;
       }
-      return output + operation.insert;
+      return output + operation.insert + `${S}r`;
     }, '');
   }
 
   ngOnInit(): void {
     this.colors = colors;
+  }
+
+  ngAfterViewInit(): void {
     const editor = new Quill('#editor', {
       modules: {
-        toolbar: [
-          ['bold', 'italic', 'underline', 'strike'],
-          [{'color': colors.map(c => c.hex)}, /* obfuscated */],
-          ['clean']
-        ]
+        toolbar: '#toolbar'
       },
       theme: 'snow'
     });
@@ -53,8 +53,7 @@ export class AppComponent implements OnInit {
         return;
       }
       this.text = this.text.compose(delta);
-      console.log(this.text);
-      console.log(this.convertToMCString(this.text));
+      this.outputString = this.convertToMCString(this.text);
     });
   }
 }
