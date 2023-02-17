@@ -1,79 +1,78 @@
+import { Code } from "../enums/code";
+
 export interface Color {
   code: string;
   name: string;
   hex: string;
 }
 
-export const colors: Color[] = [{
-    code: 'f',
+export const Colors: Color[] = [{
+    code: Code.White,
     name: 'White',
     hex: '#FFFFFF'
   }, {
-    code: '7',
+    code: Code.Gray,
     name: 'Gray',
     hex: '#AAAAAA'
   }, {
-    code: '8',
+    code: Code.DarkGray,
     name: 'Dark Gray',
     hex: '#555555'
   }, {
-    code: '0',
+    code: Code.Black,
     name: 'Black',
     hex: '#000000'
   }, {
-    code: '9',
+    code: Code.Blue,
     name: 'Blue',
     hex: '#5555FF'
   }, {
-    code: '1',
+    code: Code.DarkBlue,
     name: 'Dark Blue',
     hex: '#0000AA'
   }, {
-    code: 'b',
+    code: Code.Aqua,
     name: 'Aqua',
     hex: '#55FFFF'
   }, {
-    code: '3',
+    code: Code.DarkAqua,
     name: 'Dark Aqua',
     hex: '#00AAAA'
   }, {
-    code: 'a',
+    code: Code.Green,
     name: 'Green',
     hex: '#55FF55'
   }, {
-    code: '2',
+    code: Code.DarkGreen,
     name: 'Dark Green',
     hex: '#00AA00'
   }, {
-    code: 'e',
+    code: Code.Yellow,
     name: 'Yellow',
     hex: '#FFFF55'
   }, {
-    code: 'g',
+    code: Code.MinecoinGold,
     name: 'Minecoin Gold',
     hex: '#DDD605'
   }, {
-    code: '6',
+    code: Code.Gold,
     name: 'Gold',
     hex: '#FFAA00'
   }, {
-    code: 'c',
+    code: Code.Red,
     name: 'Red',
     hex: '#FF5555'
   }, {
-    code: '4',
+    code: Code.DarkRed,
     name: 'Dark Red',
     hex: '#AA0000'
   }, {
-    code: 'd',
+    code: Code.LightPurple,
     name: 'Light Purple',
     hex: '#FF55FF'
   }, {
-    code: '5',
+    code: Code.DarkPurple,
     name: 'Dark Purple',
     hex: '#AA00AA'
   },
-].map(color => {
-  color.code = '§' + color.code;
-  return color;
-});
+];
