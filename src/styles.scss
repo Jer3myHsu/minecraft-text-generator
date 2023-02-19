@@ -2,15 +2,38 @@
 
 @font-face {
   font-family: 'Mojangles';
-  src: url('assets/Minecraft.eot');
-  src: url('assets/Minecraft.eot?#iefix') format('embedded-opentype'),
-      url('assets/Minecraft.woff2') format('woff2'),
-      url('assets/Minecraft.woff') format('woff'),
-      url('assets/Minecraft.ttf') format('truetype');
+  src: url('assets/Minecraft-Regular.woff2') format('woff2'),
+      url('assets/Minecraft-Regular.woff') format('woff'),
+      url('assets/Minecraft-Regular.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+}
 
+@font-face {
+  font-family: 'Mojangles';
+  src: url('assets/Minecraft-Bold.woff2') format('woff2'),
+      url('assets/Minecraft-Bold.woff') format('woff'),
+      url('assets/Minecraft-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mojangles';
+  src: url('assets/Minecraft-Italic.woff2') format('woff2'),
+      url('assets/Minecraft-Italic.woff') format('woff'),
+      url('assets/Minecraft-Italic.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Mojangles';
+  src: url('assets/Minecraft-BoldItalic.woff2') format('woff2'),
+      url('assets/Minecraft-BoldItalic.woff') format('woff'),
+      url('assets/Minecraft-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
 }
 
 html {
