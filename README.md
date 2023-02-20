@@ -14,4 +14,5 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Resources
 
 [Formatting codes](https://minecraft.fandom.com/wiki/Formatting_codes)
+
 [Font](https://www.fontspace.com/minecraft-font-f28180)
