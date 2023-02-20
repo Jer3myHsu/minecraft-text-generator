@@ -41,20 +41,20 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private addFormatCodes(attributes: any): string {
-    let output = '';
+    let code = '';
     if (attributes?.bold) {
-      output += this.state.isBold ? '' : Code.Bold;
+      code += this.state.isBold ? '' : Code.Bold;
     }
     if (attributes?.italic) {
-      output += this.state.isItalic ? '' : Code.Italic;
+      code += this.state.isItalic ? '' : Code.Italic;
     }
     if (attributes?.underline) {
-      output += this.state.isUnder ? '' : Code.Underline;
+      code += this.state.isUnder ? '' : Code.Underline;
     }
     if (attributes?.strike) {
-      output += this.state.isStrike ? '' : Code.Strike;
+      code += this.state.isStrike ? '' : Code.Strike;
     }
-    return output;
+    return code;
   }
 
   private addColorCodes(attributes: any): string {
@@ -65,12 +65,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private convertToMCString(delta: any): string {
     return delta.ops.reduce((output: string, operation: any, index: number) => {
+      let code = '';
       if (this.needsReset(operation.attributes)) {
           this.resetState();
-          output += index ? Code.Reset : '';
+          code += index ? Code.Reset : '';
       }
-      output += this.addFormatCodes(operation.attributes);
-      output += this.addColorCodes(operation.attributes);
+      code += this.addFormatCodes(operation.attributes);
+      code += this.addColorCodes(operation.attributes);
       this.state = {
         isBold: !!operation.attributes?.bold,
         isItalic: !!operation.attributes?.italic,
@@ -78,7 +79,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         isStrike: !!operation.attributes?.strike,
         color: operation.attributes?.color ?? this.defaultColor.hex
       }
-      return output + operation.insert;
+      return output + code + operation.insert;
     }, '').trim();
   }
 
@@ -102,9 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
       }
       this.text = this.text.compose(delta);
-      console.log(this.text)
       this.resetState();
-      // editor.format('color', `${this.defaultColor.hex}`);
       this.outputString = this.convertToMCString(this.text);
     });
   }
