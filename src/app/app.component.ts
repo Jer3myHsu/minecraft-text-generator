@@ -18,11 +18,19 @@ export class AppComponent implements OnInit, AfterViewInit {
     isItalic: false,
     isUnder: false,
     isStrike: false,
-    currentColor: ''
+    color: ''
   }
   defaultColor!: Color;
 
-  constructor() {}
+  private resetState() {
+    this.state = {
+      isBold: false,
+      isItalic: false,
+      isUnder: false,
+      isStrike: false,
+      color: this.defaultColor.hex
+    }
+  }
 
   private needsReset(attributes: any) {
     const wasBold = this.state.isBold && this.state.isBold != !!attributes?.bold;
@@ -49,44 +57,35 @@ export class AppComponent implements OnInit, AfterViewInit {
     return output;
   }
 
-  private addColorCodes(start: boolean, attributes: any): string {
+  private addColorCodes(attributes: any): string {
     const attributeColor = attributes?.color ?? this.defaultColor.hex;
-    if (!start || attributeColor.toLowerCase() != this.defaultColor.hex.toLowerCase()) {
-      const color = Colors.find(color => color.hex.toLowerCase() == attributeColor.toLowerCase());
-      return this.state.currentColor?.toLowerCase() === color?.hex.toLowerCase() ? '' : (color?.code ?? '');
-    }
-    return '';
+    const color = Colors.find(color => color.hex.toLowerCase() == attributeColor.toLowerCase());
+    return this.state.color.toLowerCase() === color?.hex.toLowerCase() ? '' : (color?.code ?? '');
   }
 
   private convertToMCString(delta: any): string {
     return delta.ops.reduce((output: string, operation: any, index: number) => {
       if (this.needsReset(operation.attributes)) {
-          this.state = {
-            isBold: false,
-            isItalic: false,
-            isUnder: false,
-            isStrike: false,
-            currentColor: this.defaultColor.hex
-          }
+          this.resetState();
           output += index ? Code.Reset : '';
       }
       output += this.addFormatCodes(operation.attributes);
-      output += this.addColorCodes(!index, operation.attributes);
+      output += this.addColorCodes(operation.attributes);
       this.state = {
         isBold: !!operation.attributes?.bold,
         isItalic: !!operation.attributes?.italic,
         isUnder: !!operation.attributes?.underline,
         isStrike: !!operation.attributes?.strike,
-        currentColor: operation.attributes?.color
+        color: operation.attributes?.color ?? this.defaultColor.hex
       }
       return output + operation.insert;
-    }, '');
+    }, '').trim();
   }
 
   ngOnInit(): void {
     this.colors = Colors;
-    this.defaultColor = Colors[0];
-    this.state.currentColor = this.defaultColor.hex;
+    this.defaultColor = Colors.find(color => color.name === 'Black') ?? Colors[0];
+    this.state.color = this.defaultColor.hex;
   }
 
   ngAfterViewInit(): void {
@@ -94,6 +93,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       modules: {
         toolbar: '#toolbar'
       },
+      placeholder: 'Type your message...',
       theme: 'snow'
     });
 
@@ -102,6 +102,9 @@ export class AppComponent implements OnInit, AfterViewInit {
         return;
       }
       this.text = this.text.compose(delta);
+      console.log(this.text)
+      this.resetState();
+      // editor.format('color', `${this.defaultColor.hex}`);
       this.outputString = this.convertToMCString(this.text);
     });
   }

@@ -3,5 +3,5 @@ export interface FormatState {
   isItalic: boolean;
   isUnder: boolean;
   isStrike: boolean;
-  currentColor: string;
+  color: string;
 }

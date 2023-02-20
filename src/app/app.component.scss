@@ -9,6 +9,19 @@
   }
 
   ::ng-deep .ql-editor {
-    font-family: Mojangles;
+    font-family: Mojangles, Arial, Helvetica, sans-serif;
+    font-size: 16pt;
+  }
+
+  ::ng-deep .ql-editor::-moz-selection, ::ng-deep .ql-editor::selection {
+    background-color: lightgreen !important;
+  }
+
+  @media screen and (orientation: portrait) {
+    grid-template-columns: auto;
+
+    #toolbar {
+      grid-column: 1;
+    }
   }
 }
