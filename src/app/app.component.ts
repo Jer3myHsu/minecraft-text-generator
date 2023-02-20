@@ -83,6 +83,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     }, '').trim();
   }
 
+  private setIconColor(color: string | string[]): void {
+    color = color ?? this.defaultColor.hex;
+    if (typeof color === 'string') {
+      const icon: any = document.querySelector('.ql-color-label.ql-stroke');
+      icon.style.stroke = color;
+    }
+  }
+
   ngOnInit(): void {
     this.colors = Colors;
     this.defaultColor = Colors.find(color => color.name === 'Black') ?? Colors[0];
@@ -110,9 +118,20 @@ export class AppComponent implements OnInit, AfterViewInit {
       if (source !== 'user') {
         return;
       }
+      delta.forEach((op: any) => {
+        this.setIconColor(op?.attributes?.color);
+      });
       this.text = this.text.compose(delta);
       this.resetState();
       this.outputString = this.convertToMCString(this.text);
+    });
+
+    editor.on('selection-change', (range: {index: number, length: number}, oldRange: any, source: string) => {
+      if (!range) {
+        return;
+      }
+      const format = editor.getFormat(range.index, range.length);
+      this.setIconColor(format?.color);
     });
   }
 }
