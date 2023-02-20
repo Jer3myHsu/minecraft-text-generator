@@ -64,7 +64,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   private convertToMCString(delta: any): string {
-    return delta.ops.reduce((output: string, operation: any, index: number) => {
+    return delta.reduce((output: string, operation: any, index: number) => {
       let code = '';
       if (this.needsReset(operation.attributes)) {
           this.resetState();
@@ -92,7 +92,15 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     const editor = new Quill('#editor', {
       modules: {
-        toolbar: '#toolbar'
+        toolbar: '#toolbar',
+        clipboard: {
+          matchers: [
+            [Node.ELEMENT_NODE , (node: any, delta: any) => {
+              delta.forEach((op: any) => delete op.attributes);
+              return delta;
+            }]
+          ]
+        }
       },
       placeholder: 'Type your message...',
       theme: 'snow'
